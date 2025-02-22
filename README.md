@@ -11,4 +11,4 @@ First, head [here](https://www.kaggle.com/code/basu369victor/generate-music-with
 
 ### Environment
 
-For now, I've been able to do everything I need to do with Python 3.7 and the `requirements.txt` file. If things get more complicated, we can use Docker!
+For now, I've been able to do everything I need to do with Python 3.7 and the `requirements.txt` file. If things get more complicated, we can use Docker! For now though, just create a virtual environment and `pip install -r requirements.txt` away.

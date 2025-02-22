@@ -1,5 +1,3 @@
-data/genres_original
-data/images_original
-data/features_3_sec.csv
-data/features_30_sec.csv
-data/data.zip
+data/*
+outputs/*
+.ipynb_checkpoints/

@@ -6,6 +6,14 @@ import numpy as np #math library
 import tensorflow as tf #for model building
 import pandas as pd #for data analysis / prep
 
+# Parameters
+SAMPLE_RATE = 22050  # Standard sample rate for music processing
+N_MELS = 128         # Number of Mel filterbanks
+HOP_LENGTH = 512     # Hop length for STFT
+N_FFT = 2048         # FFT window size
+DURATION = 5         # Duration of each audio clip in seconds
+BATCH_SIZE = 32
+
 def load_audio_to_mel(file_path):
     """Function to load an audio file and convert it to a Mel spectrogram."""
     y, sr = librosa.load(file_path, sr=SAMPLE_RATE, duration=DURATION)

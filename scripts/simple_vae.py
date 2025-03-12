@@ -1,6 +1,7 @@
 #This script is a distilled version of `notebooks/simple_vae.ipynb` where we only keep the model's core components.
 
 #IMPORTS
+from dataprep import load_music_df, create_tf_dataset, load_audio_to_mel #local data functions
 import librosa, os #audio processing and file system parsing
 import librosa.display
 import numpy as np #math library
@@ -114,20 +115,22 @@ def generate_samples(model, num_samples=10):
     generated_samples = [s.numpy().squeeze() for s in generated_samples] #convert to numpy, reshape
     return generated_samples
 
-
-from dataprep import load_music_df, create_tf_dataset, load_audio_to_mel
-
 if __name__ == "__main__":
-    #load data
-    music_df = load_music_df("../data/genres_original/")
+    dataset_path = "data/genres_original/"
+    n_epochs = 1
+
+    print(f"loading data...")
+    music_df = load_music_df(dataset_path)
     songs_dataset = create_tf_dataset(music_df)
 
-    #create and compile VAE
+    print(f"creating and training VAE...")
     vae = VAE()
     vae.compile(optimizer=tf.keras.optimizers.Adam())
+    vae.fit(songs_dataset, epochs=n_epochs)
+    vae.build() #maybe this wille fix it?
 
-    #train and create samples
-    vae.fit(songs_dataset, epochs=20)
+    print(f"evaluating and saving model...")
     generated_samples = generate_samples(vae, num_samples=5)
+    vae.save(f'models/simple_vae_{n_epochs}.keras')
 
     #TD: save out model, generated samples

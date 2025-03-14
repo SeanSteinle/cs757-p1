@@ -127,7 +127,7 @@ if __name__ == "__main__":
     vae = VAE()
     vae.compile(optimizer=tf.keras.optimizers.Adam())
     vae.fit(songs_dataset, epochs=n_epochs)
-    vae.build() #maybe this wille fix it?
+    vae.build(INPUT_SHAPE) #maybe this wille fix it?
 
     print(f"evaluating and saving model...")
     generated_samples = generate_samples(vae, num_samples=5)

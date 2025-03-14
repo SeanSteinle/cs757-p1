@@ -11,5 +11,13 @@ We started off by creating a simple VAE with only a few layers for the encoder a
 
 As mentioned above, our performance was fairly poor on our first run. This is likely due to a few factors: we only trained for 20 epochs, we only used 1000 samples to train, and our model was overly simplistic. Luckily, these limitations also act as avenues to improve our model!
 
+### An Aside: Saving Models
+
+Something I've accidentally spent a lot of time on is trying to save out our VAE model. This would be convenient so that we do not need to retrain our model from scratch each time we create it. However, saving Keras objects is non-trivial, and must be done carefully. Something I've quickly learned is that it's probably best to keep your model very modular as opposed to monolithic. For example, it would be better to almost treat the encoder and decoder as separate models which can be passed in to assemble the VAE object, rather than trying to serialize the entire VAE object.
+
+Here are some threads I've been looking at for reference:
+1. [Blog on how to build a VAE in Keras](https://blog.paperspace.com/how-to-build-variational-autoencoder-keras/)
+2. [Reddit thread on saving Keras VAE's](https://www.reddit.com/r/learnmachinelearning/comments/t4dbmb/how_to_save_vae_model_made_by_keras/)
+
 ## An Improved VAE Model
 

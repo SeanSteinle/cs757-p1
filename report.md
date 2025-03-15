@@ -15,7 +15,6 @@ In case you don't want to run the notebook, [here](outputs/samples/simple_vae.wa
 
 ***Editorial Note:*** Looking back, this occurred because we were not doing sufficient audio processing! We were not padding and truncating our audio files and also we did not 'unnormalize' our generated spectrograms before converting them to audio. This resulted in an absolutely wretched 4 second clip for each of our predictions.
 
-
 ### An Aside: Saving Models
 
 Something I've accidentally spent a lot of time on is trying to save out our VAE model. This would be convenient so that we do not need to retrain our model from scratch each time we create it. However, saving Keras objects is non-trivial, and must be done carefully. Something I've quickly learned is that it's probably best to keep your model very modular as opposed to monolithic. For example, it would be better to almost treat the encoder and decoder as separate models which can be passed in to assemble the VAE object, rather than trying to serialize the entire VAE object.
@@ -29,10 +28,3 @@ Here are some threads I've been looking at for reference:
 ### Revisiting the Spectrogram - Audio Dichotomy
 
 The challenges listed above led us to develop a new model in `notebooks/improved_vae.ipynb`, inspired by a [Medium blogpost](https://yuehan-z.medium.com/how-to-train-your-ml-models-music-generation-try-it-out-d4c0ab01c9f4). This model is more modular but more importantly we learned how to handle audio data more adeptly. This is evident in our best sample from this model. I've linked the audio from the [ground-truth spectrogram](outputs/samples/improved_vae_gt.wav) and our [generation](outputs/samples/improved_vae_pred.wav)--can you guess which is which?
-
-### Performance Across Genres
-
-
-### Performance at Scale
-
-Finally, we wanted to see how much we could improve our model's performance simply by feeding it more data. This was relatively easy to do by leveraging the [Free Music Archive](github.com/mdeff/fma). By using their smallest dataset at 8GB, we got 8,000 songs.

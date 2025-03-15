@@ -5,11 +5,16 @@
 
 ### A Key Distinction: Raw Audio vs. Spectrograms
 
-We started off by creating a simple VAE with only a few layers for the encoder and decoder. We also explored the audio modality since neither of us had much experience. From working with the data, we found that there is a key distinction to be made in whether audio is represented as raw audio in a .wav file or whether the audio has been transformed into a spectrogram. You can see this difference qualitatively in our `simple_vae.ipynb` notebook where we play the raw audio, a version of the raw audio which was translated into a spectrogram and back, and our predicted spectrogram translated into audio. This distinction is key, because while our first samples were very poor (essentially white noise), this gap in quality between raw audio and transformed audio will act as a ceiling on our model's performance since we are generating spectrogram samples.
+We started off by creating a simple VAE with only a few layers for the encoder and decoder. We also explored the audio modality since neither of us had much experience. From working with the data, we found that there is a key distinction to be made in whether audio is represented as raw audio in a .wav file or whether the audio has been transformed into a spectrogram. You can see this difference qualitatively in our `notebooks/simple_vae.ipynb` notebook where we play the raw audio, a version of the raw audio which was translated into a spectrogram and back, and our predicted spectrogram translated into audio. This distinction is key, because while our first samples were very poor (essentially white noise), this gap in quality between raw audio and transformed audio will act as a ceiling on our model's performance since we are generating spectrogram samples.
 
 ### Performance and Avenues for Improvement
 
 As mentioned above, our performance was fairly poor on our first run. This is likely due to a few factors: we only trained for 20 epochs, we only used 1000 samples to train, and our model was overly simplistic. Luckily, these limitations also act as avenues to improve our model!
+
+In case you don't want to run the notebook, [here](outputs/samples/simple_vae.wav) is a sample from our first run.
+
+***Editorial Note:*** Looking back, this occurred because we were not doing sufficient audio processing! We were not padding and truncating our audio files and also we did not 'unnormalize' our generated spectrograms before converting them to audio. This resulted in an absolutely wretched 4 second clip for each of our predictions.
+
 
 ### An Aside: Saving Models
 
@@ -21,3 +26,13 @@ Here are some threads I've been looking at for reference:
 
 ## An Improved VAE Model
 
+### Revisiting the Spectrogram - Audio Dichotomy
+
+The challenges listed above led us to develop a new model in `notebooks/improved_vae.ipynb`, inspired by a [Medium blogpost](https://yuehan-z.medium.com/how-to-train-your-ml-models-music-generation-try-it-out-d4c0ab01c9f4). This model is more modular but more importantly we learned how to handle audio data more adeptly. This is evident in our best sample from this model. I've linked the audio from the [ground-truth spectrogram](outputs/samples/improved_vae_gt.wav) and our [generation](outputs/samples/improved_vae_pred.wav)--can you guess which is which?
+
+### Performance Across Genres
+
+
+### Performance at Scale
+
+Finally, we wanted to see how much we could improve our model's performance simply by feeding it more data. This was relatively easy to do by leveraging the [Free Music Archive](github.com/mdeff/fma). By using their smallest dataset at 8GB, we got 8,000 songs.
